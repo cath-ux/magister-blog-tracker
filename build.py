@@ -37,8 +37,15 @@ COL={"Planned":"#9a9a9a","Written":"#b7791f","Scheduled":"#1f6feb","Live":"#2f85
 e=H.escape
 top="";sec=""
 for n,c,g,l,s,rows in CL:
-    top+=f"<tr><td><b>{e(n)}</b></td><td>{c} a month</td><td><a href='{BC}{g}' target='_blank'>Brand guide comment</a></td><td><a href='{BC}{l}' target='_blank'>Blog per Month list</a></td><td><a href='{GS}{s}/edit' target='_blank'>Topic sheet</a></td></tr>\n"
     live=sum(1 for r in rows if r[3]=="Live")
+    drafts=sum(1 for r in rows if r[3] in ("Written","Scheduled","Live"))
+    def cell(k,tot,word):
+        col='#2f855a' if k>=tot else ('#b7791f' if k else '#c53030')
+        left=tot-k
+        tail=f"<br><span class=x>{left} to {word}</span>" if left else "<br><span class=x>complete</span>"
+        return f"<td><b style='color:{col};font-size:16px'>{k}/{tot}</b>{tail}</td>"
+    top+=f"<tr><td><b>{e(n)}</b></td><td>{c} a month</td>"+cell(drafts,c,'draft')+cell(live,c,'publish')+f"<td><a href='{BC}{g}' target='_blank'>Brand guide comment</a></td><td><a href='{BC}{l}' target='_blank'>Blog per Month list</a></td><td><a href='{GS}{s}/edit' target='_blank'>Topic sheet</a></td></tr>
+"
     sec+=f"<h2>{e(n)} <span class=x>{live} of {len(rows)} live &middot; <a href='{GS}{s}/edit' target='_blank'>topic sheet</a></span></h2>\n<div style='overflow-x:auto'><table style='min-width:900px'><tr><th>#</th><th>Topic</th><th>Main keyword</th><th>Target date</th><th>Status</th><th>Live URL</th><th>Indexing</th></tr>\n"
     for i,(t,k,d,st,u,ix) in enumerate(rows,1):
         url=f"<a href='{e(u)}' target='_blank'>Open post</a>" if u else "-"
@@ -53,7 +60,7 @@ td{{padding:9px;border-bottom:1px solid #e3e3e3;vertical-align:top}}tr:nth-child
 a{{color:#1f6feb}}</style></head><body>
 <h1>Magister blog tracker</h1>
 <p>Updated Nov 17, 2026. Blogs a month come from Beth's comment on each client's brand guide (from Dimi's Client Sheet). Open the topic sheet for every topic, keyword and status.</p>
-<div style="overflow-x:auto"><table style="min-width:720px"><tr><th>Client</th><th>Blogs a month</th><th>Cadence source</th><th>Basecamp list</th><th>Schedule</th></tr>
+<div style="overflow-x:auto"><table style="min-width:900px"><tr><th>Client</th><th>Blogs a month</th><th>November drafts</th><th>November published</th><th>Cadence source</th><th>Basecamp list</th><th>Schedule</th></tr>
 {top}</table></div>
 <h1 style="margin-top:34px">November 2026</h1>
 <p>Each client's blogs for the month. Dates are the targets from the topic sheets until the WordPress schedule is confirmed. Status goes Planned, Written, Scheduled, Live. "Not checked" under Indexing means the post is live but its indexing has not been looked at yet.</p>
