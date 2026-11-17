@@ -44,8 +44,7 @@ for n,c,g,l,s,rows in CL:
         left=tot-k
         tail=f"<br><span class=x>{left} to {word}</span>" if left else "<br><span class=x>complete</span>"
         return f"<td><b style='color:{col};font-size:16px'>{k}/{tot}</b>{tail}</td>"
-    top+=f"<tr><td><b>{e(n)}</b></td><td>{c} a month</td>"+cell(drafts,c,'draft')+cell(live,c,'publish')+f"<td><a href='{BC}{g}' target='_blank'>Brand guide comment</a></td><td><a href='{BC}{l}' target='_blank'>Blog per Month list</a></td><td><a href='{GS}{s}/edit' target='_blank'>Topic sheet</a></td></tr>
-"
+    top+=f"<tr><td><b>{e(n)}</b></td><td>{c} a month</td>"+cell(drafts,c,'draft')+cell(live,c,'publish')+f"<td><a href='{BC}{g}' target='_blank'>Brand guide comment</a></td><td><a href='{BC}{l}' target='_blank'>Blog per Month list</a></td><td><a href='{GS}{s}/edit' target='_blank'>Topic sheet</a></td></tr>\n"
     sec+=f"<h2>{e(n)} <span class=x>{live} of {len(rows)} live &middot; <a href='{GS}{s}/edit' target='_blank'>topic sheet</a></span></h2>\n<div style='overflow-x:auto'><table style='min-width:900px'><tr><th>#</th><th>Topic</th><th>Main keyword</th><th>Target date</th><th>Status</th><th>Live URL</th><th>Indexing</th></tr>\n"
     for i,(t,k,d,st,u,ix) in enumerate(rows,1):
         url=f"<a href='{e(u)}' target='_blank'>Open post</a>" if u else "-"
